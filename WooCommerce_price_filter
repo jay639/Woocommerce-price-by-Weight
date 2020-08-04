@@ -1,0 +1,27 @@
+/** Woocommerce Price by weight */
+
+add_filter( 'woocommerce_get_price_html', 'wb_change_product_html' );
+	// Change and return $price_html variable using the $price and weight amount
+	function wb_change_product_html( $price ) {
+		$price_html = '<span class="amount">' . $price . ' / kg </span>';	// change weight measurement here
+	
+		return $price_html;
+	}
+	
+	add_filter( 'woocommerce_cart_item_price', 'wb_change_product_price_cart' );
+	// Change the cart prices with $price variable and weight amount
+	function wb_change_product_price_cart( $price ) {
+		$price = $price . ' /kg';	// change weight measurement here
+	
+		return $price;
+	}
+	
+	add_filter( 'woocommerce_checkout_cart_item_quantity', 'wb_checkout_review', 10, 3 );
+	// Change the checkput prices with $cart_item variable and weight amount
+	function wb_checkout_review ( $quantity, $cart_item, $cart_item_key ) {
+		
+		$cart_item = ' <strong class="product-quantity">' . sprintf( '&times; %s', $cart_item['quantity'] ) . ' kg </strong>';	// change weight measurement here
+	
+		return $cart_item;
+	
+	}
